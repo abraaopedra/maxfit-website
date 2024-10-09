@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-dumbbell me-2"></i>FitTrack Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-bs-target="home">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-target="workout">
+                            <i class="fas fa-running me-1"></i>Workout
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-target="profile">
+                            <i class="fas fa-user me-1"></i>Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-target="stats">
+                            <i class="fas fa-chart-line me-1"></i>Statistics
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="home" class="content-section active">
+            <!-- Home content remains unchanged -->
+        </div>
+
+        <div id="workout" class="content-section">
+            <h2 class="mb-4">Workout Templates</h2>
+            <div class="row" id="workout-templates">
+                <!-- Workout templates will be dynamically added here -->
+            </div>
+            <button class="btn btn-primary mt-3" id="create-template">Create New Template</button>
+        </div>
+
+        <div id="active-workout" class="content-section">
+            <h2 class="mb-4">Current Workout</h2>
+            <div id="workout-exercises">
+                <!-- Active workout exercises will be dynamically added here -->
+            </div>
+            <button class="btn btn-primary mt-3" id="finish-workout">Finish Workout</button>
+        </div>
+
+        <div id="profile" class="content-section">
+            <h2>Personal Information</h2>
+            <!-- Profile content will be added here -->
+        </div>
+
+        <div id="stats" class="content-section">
+            <h2>Statistics</h2>
+            <!-- Statistics content will be added here -->
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>&copy; 2024 FitTrack Pro. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
