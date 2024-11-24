@@ -1,53 +1,440 @@
 body {
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 .content-section {
-    display: none;
+  display: none;
 }
 
 .content-section.active {
-    display: block;
+  display: block;
 }
 
 .workout-template {
-    cursor: pointer;
-    transition: background-color 0.3s;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .workout-template:hover {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .exercise-item {
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
 }
 
 .exercise-item h4 {
-    color: #007bff;
-    margin-bottom: 10px;
+  color: #007bff;
+  margin-bottom: 10px;
 }
 
 .exercise-input {
-    width: 80px;
-    display: inline-block;
-    margin-right: 10px;
+  width: 80px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 #workout-list {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #workout-list li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* Dashboard specific styles */
+.fas {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.card {
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.quick-stats-card {
+  text-align: center;
+  padding: 20px;
+}
+
+.list-group-item {
+  border-left: none;
+  border-right: none;
+}
+
+.list-group-item:first-child {
+  border-top: none;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 15px;
+  }
+}
+
+/* Profile page specific styles */
+.profile-picture-container {
+  position: relative;
+  margin: 0 auto;
+  width: 150px;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.profile-picture i {
+  font-size: 6rem;
+  color: #dee2e6;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.measurement-card {
+  transition: transform 0.2s;
+}
+
+.measurement-card:hover {
+  transform: translateY(-5px);
+}
+
+#profile-name {
+  margin-bottom: 0.5rem;
+}
+
+#member-since {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .profile-picture-container {
+    width: 120px;
+  }
+
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-picture i {
+    font-size: 4rem;
+  }
+}
+
+/* Base styles */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+/* Dark Mode Styles */
+[data-theme="dark"] {
+  background-color: #1a1a1a !important;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .container {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .navbar {
+  background-color: #2d2d2d !important;
+}
+
+[data-theme="dark"] .card {
+  background-color: #2d2d2d;
+  border: none;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .bg-primary {
+  background-color: #0d6efd !important;
+}
+
+[data-theme="dark"] .card-header {
+  background-color: #353535;
+  border-bottom: 1px solid #404040;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .main-content {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] body {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .list-group-item {
+  background-color: #2d2d2d;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .btn-outline-primary {
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+[data-theme="dark"] .btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .text-muted {
+  color: #a0a0a0 !important;
+}
+
+[data-theme="dark"] footer {
+  background-color: #2d2d2d !important;
+}
+
+[data-theme="dark"] .modal-content {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .modal-header {
+  border-bottom-color: #404040;
+}
+
+[data-theme="dark"] .modal-footer {
+  border-top-color: #404040;
+}
+
+[data-theme="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+[data-theme="dark"] .modal-content a {
+  color: #0d6efd;
+}
+
+[data-theme="dark"] .modal-content a:hover {
+  color: #0a58ca;
+}
+
+/* Ensure the welcome card stays blue */
+[data-theme="dark"] .card.bg-primary {
+  background-color: #0d6efd !important;
+}
+
+/* Stats cards specific styling */
+[data-theme="dark"] .quick-stats .card {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+/* Quick actions buttons in dark mode */
+[data-theme="dark"] .btn-outline-primary {
+  background-color: transparent;
+}
+
+[data-theme="dark"] .btn-outline-primary:hover {
+  background-color: #0d6efd;
+}
+
+/* Additional text color fixes */
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] .card-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .form-label {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .form-control {
+  background-color: #353535;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .form-control::placeholder {
+  color: #a0a0a0;
+}
+
+[data-theme="dark"] .form-select {
+  background-color: #353535;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+/* Theme Toggle Button Styles */
+.theme-toggle {
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Container styles for proper footer positioning */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+/* Modal de Exercícios */
+.exercise-modal {
+  background-color: var(--bs-body-bg);
+}
+
+[data-theme="dark"] .exercise-modal {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+.exercise-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.exercise-item-modal {
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: transform 0.2s;
+}
+
+[data-theme="dark"] .exercise-item-modal {
+  background-color: #353535;
+}
+
+.exercise-item-modal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Toast personalizado */
+.custom-toast {
+  background: linear-gradient(to right, #00b09b, #96c93d);
+  border-radius: 8px !important;
+}
+
+.error-toast {
+  background: linear-gradient(to right, #ff5f6d, #ffc371);
+}
+
+/* Estilos para o modal de criação de template */
+.exercise-entry {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.exercise-entry:hover {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+[data-theme="dark"] .exercise-entry:hover {
+  background-color: #353535;
+}
+
+.remove-exercise {
+  transition: all 0.2s ease;
+}
+
+.exercise-entry:hover .remove-exercise {
+  opacity: 1;
+}
+
+.input-group {
+  margin-top: 5px;
+}
+
+#addExercise {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Animação para adicionar/remover exercícios */
+.exercise-entry.removing {
+  animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.exercise-entry.adding {
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

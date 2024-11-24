@@ -1,86 +1,717 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FitTrack Pro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <!-- Toastify CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <!-- Toastify JS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-dumbbell me-2"></i>FitTrack Pro
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" data-bs-target="home">
-                            <i class="fas fa-home me-1"></i>Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-target="workout">
-                            <i class="fas fa-running me-1"></i>Workout
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-target="profile">
-                            <i class="fas fa-user me-1"></i>Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-target="stats">
-                            <i class="fas fa-chart-line me-1"></i>Statistics
-                        </a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" data-bs-target="home">
+          <i class="fas fa-dumbbell me-2"></i>FitTrack Pro
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" data-bs-target="home">
+                <i class="fas fa-home me-1"></i>Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-target="workout">
+                <i class="fas fa-running me-1"></i>Workout
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-target="profile">
+                <i class="fas fa-user me-1"></i>Profile
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-target="stats">
+                <i class="fas fa-chart-line me-1"></i>Statistics
+              </a>
+            </li>
+            <li class="nav-item">
+              <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+              </button>
+            </li>
+            <!-- Replace your existing login/register nav items with these -->
+            <li class="nav-item" id="loginNav">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+              >
+                <i class="fas fa-sign-in-alt me-1"></i>Login
+              </a>
+            </li>
+            <li class="nav-item" id="registerNav">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#registerModal"
+              >
+                <i class="fas fa-user-plus me-1"></i>Register
+              </a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <div class="container mt-4">
-        <div id="home" class="content-section active">
-            <!-- Home content remains unchanged -->
-        </div>
-
-        <div id="workout" class="content-section">
-            <h2 class="mb-4">Workout Templates</h2>
-            <div class="row" id="workout-templates">
-                <!-- Workout templates will be dynamically added here -->
+      <!-- Home Section -->
+      <div id="home" class="content-section active">
+        <div class="container py-4">
+          <!-- Welcome Section -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="card bg-primary text-white">
+                <div class="card-body">
+                  <h2 class="card-title">Welcome to FitTrack Pro!</h2>
+                  <p class="card-text">
+                    Track your fitness journey and achieve your goals.
+                  </p>
+                </div>
+              </div>
             </div>
-            <button class="btn btn-primary mt-3" id="create-template">Create New Template</button>
-        </div>
+          </div>
 
-        <div id="active-workout" class="content-section">
-            <h2 class="mb-4">Current Workout</h2>
-            <div id="workout-exercises">
-                <!-- Active workout exercises will be dynamically added here -->
+          <!-- Quick Stats -->
+          <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i
+                    class="fas fa-dumbbell mb-3"
+                    style="font-size: 2rem; color: #007bff"
+                  ></i>
+                  <h5 class="card-title">Total Workouts</h5>
+                  <h3 class="card-text" id="total-workouts">0</h3>
+                </div>
+              </div>
             </div>
-            <button class="btn btn-primary mt-3" id="finish-workout">Finish Workout</button>
-        </div>
+            <div class="col-md-4 mb-3">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i
+                    class="fas fa-fire mb-3"
+                    style="font-size: 2rem; color: #dc3545"
+                  ></i>
+                  <h5 class="card-title">Active Streak</h5>
+                  <h3 class="card-text" id="active-streak">0 days</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i
+                    class="fas fa-clock mb-3"
+                    style="font-size: 2rem; color: #28a745"
+                  ></i>
+                  <h5 class="card-title">Last Workout</h5>
+                  <h3 class="card-text" id="last-workout">Never</h3>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <div id="profile" class="content-section">
-            <h2>Personal Information</h2>
-            <!-- Profile content will be added here -->
+          <!-- Recent Activity -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Recent Workouts</h5>
+                </div>
+                <div class="card-body">
+                  <ul
+                    class="list-group list-group-flush"
+                    id="recent-workouts-list"
+                  >
+                    <li class="list-group-item text-muted">
+                      No recent workouts
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                  <div class="d-grid gap-2">
+                    <button class="btn btn-primary" data-bs-target="workout">
+                      Start New Workout
+                    </button>
+                    <button
+                      class="btn btn-outline-primary"
+                      data-bs-target="profile"
+                    >
+                      Update Profile
+                    </button>
+                    <button
+                      class="btn btn-outline-primary"
+                      data-bs-target="stats"
+                    >
+                      View Statistics
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div id="stats" class="content-section">
-            <h2>Statistics</h2>
-            <!-- Statistics content will be added here -->
+      <!-- Workout Section -->
+      <div id="workout" class="content-section">
+        <h2 class="mb-4">Workout Templates</h2>
+        <div class="row" id="workout-templates">
+          <!-- Workout templates will be dynamically added here -->
         </div>
+        <button class="btn btn-primary mt-3" id="create-template">
+          Create New Template
+        </button>
+      </div>
+
+      <!-- Active Workout Section -->
+      <div id="active-workout" class="content-section">
+        <h2 class="mb-4">Current Workout</h2>
+        <div id="workout-exercises">
+          <!-- Active workout exercises will be dynamically added here -->
+        </div>
+        <button class="btn btn-primary mt-3" id="finish-workout">
+          Finish Workout
+        </button>
+      </div>
+
+      <!-- Profile Section -->
+      <div id="profile" class="content-section">
+        <div class="container py-4">
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body text-center">
+                  <div class="profile-picture-container mb-3">
+                    <div class="profile-picture">
+                      <i class="fas fa-user-circle"></i>
+                    </div>
+                    <button
+                      class="btn btn-sm btn-primary mt-2"
+                      id="change-photo-btn"
+                    >
+                      <i class="fas fa-camera me-1"></i>Change Photo
+                    </button>
+                  </div>
+                  <h3 id="profile-name">John Doe</h3>
+                  <p class="text-muted" id="member-since">
+                    Member since: Jan 2024
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-4">Personal Information</h4>
+                  <form id="profile-form">
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="fullName" class="form-label"
+                          >Full Name</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="fullName"
+                          placeholder="Enter your full name"
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          placeholder="Enter your email"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4 mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="age"
+                          placeholder="Age"
+                        />
+                      </div>
+                      <div class="col-md-4 mb-3">
+                        <label for="weight" class="form-label"
+                          >Weight (kg)</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="weight"
+                          step="0.1"
+                          placeholder="Weight"
+                        />
+                      </div>
+                      <div class="col-md-4 mb-3">
+                        <label for="height" class="form-label"
+                          >Height (cm)</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="height"
+                          placeholder="Height"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-12 mb-3">
+                        <label for="fitnessGoal" class="form-label"
+                          >Fitness Goal</label
+                        >
+                        <select class="form-select" id="fitnessGoal">
+                          <option value="">Select your goal</option>
+                          <option value="weight-loss">Weight Loss</option>
+                          <option value="muscle-gain">Muscle Gain</option>
+                          <option value="maintenance">Maintenance</option>
+                          <option value="endurance">Endurance</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="experience" class="form-label"
+                          >Experience Level</label
+                        >
+                        <select class="form-select" id="experience">
+                          <option value="">Select experience level</option>
+                          <option value="beginner">Beginner</option>
+                          <option value="intermediate">Intermediate</option>
+                          <option value="advanced">Advanced</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="preferredWorkoutTime" class="form-label"
+                          >Preferred Workout Time</label
+                        >
+                        <select class="form-select" id="preferredWorkoutTime">
+                          <option value="">Select preferred time</option>
+                          <option value="morning">Morning</option>
+                          <option value="afternoon">Afternoon</option>
+                          <option value="evening">Evening</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row mt-3">
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                          Save Changes
+                        </button>
+                        <button
+                          type="reset"
+                          class="btn btn-outline-secondary ms-2"
+                        >
+                          Reset
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-body">
+                  <h4 class="card-title mb-4">Body Measurements</h4>
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <label for="chest" class="form-label">Chest (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="chest"
+                        placeholder="Chest"
+                      />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="waist" class="form-label">Waist (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="waist"
+                        placeholder="Waist"
+                      />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="hips" class="form-label">Hips (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="hips"
+                        placeholder="Hips"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <label for="biceps" class="form-label">Biceps (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="biceps"
+                        placeholder="Biceps"
+                      />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="thighs" class="form-label">Thighs (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="thighs"
+                        placeholder="Thighs"
+                      />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="calves" class="form-label">Calves (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="calves"
+                        placeholder="Calves"
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-12">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="save-measurements"
+                      >
+                        Save Measurements
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Section -->
+      <div id="stats" class="content-section">
+        <div class="container py-4">
+          <h2 class="mb-4">Your Statistics</h2>
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Workout Progress</h5>
+                </div>
+                <div class="card-body">
+                  <p class="text-muted">
+                    Workout progress visualization coming soon!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Weight Progress</h5>
+                </div>
+                <div class="card-body">
+                  <p class="text-muted">
+                    Weight tracking visualization coming soon!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Workout History</h5>
+                </div>
+                <div class="card-body">
+                  <p class="text-muted">
+                    Detailed workout history coming soon!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p>&copy; 2024 FitTrack Pro. All rights reserved.</p>
+    <!-- Login Modal -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="loginEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="loginEmail"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  required
+                />
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+              <p class="text-center mt-3 mb-0">
+                Don't have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#registerModal"
+                  data-bs-dismiss="modal"
+                >
+                  Register here
+                </a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div
+      class="modal fade"
+      id="registerModal"
+      tabindex="-1"
+      aria-labelledby="registerModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registerModalLabel">Create Account</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="registerForm">
+              <div class="mb-3">
+                <label for="registerUsername" class="form-label"
+                  >Username</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registerUsername"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="registerEmail"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword" class="form-label"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="registerPassword"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerFullName" class="form-label"
+                  >Full Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registerFullName"
+                  required
+                />
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  Create Account
+                </button>
+              </div>
+              <p class="text-center mt-3 mb-0">
+                Already have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                  data-bs-dismiss="modal"
+                >
+                  Login here
+                </a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Criação de Template -->
+    <div class="modal fade" id="createTemplateModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Criar Novo Template</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="templateForm">
+              <div class="mb-3">
+                <label for="templateName" class="form-label"
+                  >Nome do Template</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="templateName"
+                  required
+                />
+              </div>
+              <div id="exercisesList">
+                <div class="exercise-entry mb-3">
+                  <label class="form-label">Exercício 1</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control exercise-input"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-danger remove-exercise"
+                      disabled
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-secondary" id="addExercise">
+                <i class="fas fa-plus"></i> Adicionar Exercício
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" id="saveTemplate">
+              Salvar Template
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+      <p class="mb-0">&copy; 2024 FitTrack Pro. All rights reserved.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>
