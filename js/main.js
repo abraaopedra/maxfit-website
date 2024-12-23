@@ -65,10 +65,25 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function initWorkout() {
+    const workoutSection = document.getElementById('workout-templates');
+    workoutSection.innerHTML = '';
     const workoutSection = document.getElementById("workout-templates");
     if (workoutSection) {
       workoutSection.innerHTML = "";
 
+    for (const [template, exercises] of Object.entries(workoutTemplates)) {
+        const templateCard = document.createElement('div');
+        templateCard.className = 'col-md-4 mb-3';
+        templateCard.innerHTML = `
+            <div class="card workout-template" data-template="${template}">
+                <div class="card-body">
+                    <h5 class="card-title">${template}</h5>
+                    <p class="card-text">${exercises.length} exercises</p>
+                </div>
+            </div>
+        `;
+        workoutSection.appendChild(templateCard);
+    }
       for (const [template, exercises] of Object.entries(workoutTemplates)) {
         const templateCard = document.createElement("div");
         templateCard.className = "col-md-4 mb-3";
@@ -83,11 +98,17 @@ document.addEventListener("DOMContentLoaded", function () {
         workoutSection.appendChild(templateCard);
       }
 
-      // Add event listeners to workout templates
-      document.querySelectorAll(".workout-template").forEach((template) => {
-        template.addEventListener("click", startWorkout);
-      });
+    // Add event listeners to workout templates
+    document.querySelectorAll('.workout-template').forEach(template => {
+        template.addEventListener('click', startWorkout);
+    });
 
+    // Adicionar event listener para o botão de criar template
+    const createTemplateBtn = document.getElementById('create-template');
+    if (createTemplateBtn) {
+        createTemplateBtn.addEventListener('click', createTemplate);
+    }
+}
       // Add event listener to create new template button
       const createTemplateButton = document.getElementById("create-template");
       if (createTemplateButton) {
@@ -246,31 +267,73 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.show();
   }
 
-  // Função para adicionar um novo campo de exercício
   function addExerciseField() {
-    const exercisesList = document.getElementById("exercisesList");
-    if (!exercisesList) return;
+    const exercisesList = document.getElementById('exercisesList');
+    if (!exercisesList) return; // Verificação de segurança
+
     const exerciseCount = exercisesList.children.length + 1;
-
-    const exerciseEntry = document.createElement("div");
-    exerciseEntry.className = "exercise-entry mb-3 adding";
+    
+    const exerciseEntry = document.createElement('div');
+    exerciseEntry.className = 'exercise-entry mb-3 adding';
     exerciseEntry.innerHTML = `
-            <label class="form-label">Exercício ${exerciseCount}</label>
-            <div class="input-group">
-                <input type="text" class="form-control exercise-input" required>
-                <button type="button" class="btn btn-danger remove-exercise">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
-
+        <label class="form-label">Exercício ${exerciseCount}</label>
+        <div class="input-group">
+            <input type="text" class="form-control exercise-input" required>
+            <button type="button" class="btn btn-danger remove-exercise">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    
     exercisesList.appendChild(exerciseEntry);
-
-    // Remover a classe de animação após a animação terminar
+    
     setTimeout(() => {
-      exerciseEntry.classList.remove("adding");
+        exerciseEntry.classList.remove('adding');
     }, 300);
+
+    console.log('Exercício adicionado'); // Para debug
   }
+
+  // Event listeners para o modal de criar template
+  const addExerciseBtn = document.getElementById('addExercise');
+  if (addExerciseBtn) {
+      addExerciseBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          addExerciseField();
+      });
+  }
+
+  // Event listener para remover exercício
+  document.getElementById('exercisesList')?.addEventListener('click', function(e) {
+      if (e.target.closest('.remove-exercise')) {
+          const exercises = document.querySelectorAll('.exercise-entry');
+          if (exercises.length > 1) {
+              removeExerciseField(e.target.closest('.remove-exercise'));
+          }
+      }
+  });
+
+  // Event listener para salvar template
+  document.getElementById('saveTemplate')?.addEventListener('click', saveNewTemplate);
+
+  // Event listener para resetar o modal quando for fechado
+  document.getElementById('createTemplateModal')?.addEventListener('hidden.bs.modal', function() {
+      const form = document.getElementById('templateForm');
+      form.reset();
+      
+      const exercisesList = document.getElementById('exercisesList');
+      exercisesList.innerHTML = `
+          <div class="exercise-entry mb-3">
+              <label class="form-label">Exercício 1</label>
+              <div class="input-group">
+                  <input type="text" class="form-control exercise-input" required>
+                  <button type="button" class="btn btn-danger remove-exercise" disabled>
+                      <i class="fas fa-trash"></i>
+                  </button>
+              </div>
+          </div>
+      `;
+  });
 
   // Função para remover um campo de exercício
   function removeExerciseField(button) {
