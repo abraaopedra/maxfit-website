@@ -509,59 +509,29 @@ $isLoggedIn = isset($_SESSION['user_id']);
     </div>
 
     <!-- Login Modal -->
-    <div
-      class="modal fade"
-      id="loginModal"
-      tabindex="-1"
-      aria-labelledby="loginModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="loginModalLabel">Login</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form id="loginForm" method="POST" action="login.php">
               <div class="mb-3">
                 <label for="loginEmail" class="form-label">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="loginEmail"
-                  name="email"
-                  required
-                />
+                <input type="email" class="form-control" id="loginEmail" name="email" required />
               </div>
               <div class="mb-3">
                 <label for="loginPassword" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="loginPassword"
-                  name="password"
-                  required
-                />
+                <input type="password" class="form-control" id="loginPassword" name="password" required />
               </div>
               <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Login</button>
               </div>
               <p class="text-center mt-3 mb-0">
                 Don't have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#registerModal"
-                  data-bs-dismiss="modal"
-                >
-                  Register here
-                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Register here</a>
               </p>
             </form>
           </div>

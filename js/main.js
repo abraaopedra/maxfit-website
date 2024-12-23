@@ -5,51 +5,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const contentSections = document.querySelectorAll(".content-section");
 
   navLinks.forEach((link) => {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-      const target = document.querySelector(this.getAttribute("data-bs-target"));
-      if (target) {
-        contentSections.forEach((section) => section.classList.add("d-none"));
-        target.classList.remove("d-none");
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute("data-bs-target");
+
+      contentSections.forEach((section) => {
+        section.classList.remove("active");
+      });
+
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.classList.add("active");
       }
+
+      navLinks.forEach((navLink) => {
+        navLink.classList.remove("active");
+      });
+
+      if (this.classList.contains("nav-link")) {
+        this.classList.add("active");
+      }
+
+      // Scroll to top when changing sections
+      window.scrollTo(0, 0);
     });
   });
-
-  // Handle login form submission
-  const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      const loginButton = document.querySelector("#loginButton");
-      if (loginButton) {
-        loginButton.disabled = true;
-        loginButton.textContent = "Entrando...";
-      }
-
-      try {
-        const response = await fetch("login.php", {
-          method: "POST",
-          body: new FormData(this),
-        });
-        const data = await response.json();
-
-        if (data.success) {
-          showNotification("Login successful!");
-          window.location.reload();
-        } else {
-          showNotification(data.error, true);
-        }
-      } catch (error) {
-        showNotification("Erro ao conectar com o servidor", true);
-      } finally {
-        if (loginButton) {
-          loginButton.disabled = false;
-          loginButton.textContent = "Login";
-        }
-      }
-    });
-  }
 
   // Workout template data
   const workoutTemplates = {
@@ -65,56 +45,32 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function initWorkout() {
-    const workoutSection = document.getElementById('workout-templates');
-    workoutSection.innerHTML = '';
     const workoutSection = document.getElementById("workout-templates");
-    if (workoutSection) {
-      workoutSection.innerHTML = "";
+    workoutSection.innerHTML = "";
 
     for (const [template, exercises] of Object.entries(workoutTemplates)) {
-        const templateCard = document.createElement('div');
-        templateCard.className = 'col-md-4 mb-3';
-        templateCard.innerHTML = `
-            <div class="card workout-template" data-template="${template}">
-                <div class="card-body">
-                    <h5 class="card-title">${template}</h5>
-                    <p class="card-text">${exercises.length} exercises</p>
+      const templateCard = document.createElement("div");
+      templateCard.className = "col-md-4 mb-3";
+      templateCard.innerHTML = `
+                <div class="card workout-template" data-template="${template}">
+                    <div class="card-body">
+                        <h5 class="card-title">${template}</h5>
+                        <p class="card-text">${exercises.length} exercises</p>
+                    </div>
                 </div>
-            </div>
-        `;
-        workoutSection.appendChild(templateCard);
+            `;
+      workoutSection.appendChild(templateCard);
     }
-      for (const [template, exercises] of Object.entries(workoutTemplates)) {
-        const templateCard = document.createElement("div");
-        templateCard.className = "col-md-4 mb-3";
-        templateCard.innerHTML = `
-          <div class="card workout-template" data-template="${template}">
-            <div class="card-body">
-              <h5 class="card-title">${template}</h5>
-              <p class="card-text">${exercises.length} exercises</p>
-            </div>
-          </div>
-        `;
-        workoutSection.appendChild(templateCard);
-      }
 
     // Add event listeners to workout templates
-    document.querySelectorAll('.workout-template').forEach(template => {
-        template.addEventListener('click', startWorkout);
+    document.querySelectorAll(".workout-template").forEach((template) => {
+      template.addEventListener("click", startWorkout);
     });
 
-    // Adicionar event listener para o botão de criar template
-    const createTemplateBtn = document.getElementById('create-template');
-    if (createTemplateBtn) {
-        createTemplateBtn.addEventListener('click', createTemplate);
-    }
-}
-      // Add event listener to create new template button
-      const createTemplateButton = document.getElementById("create-template");
-      if (createTemplateButton) {
-        createTemplateButton.addEventListener("click", createTemplate);
-      }
-    }
+    // Add event listener to create new template button
+    document
+      .getElementById("create-template")
+      .addEventListener("click", createTemplate);
   }
 
   // Dashboard initialization
@@ -128,29 +84,31 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Update dashboard stats
-    const totalWorkoutsElement = document.getElementById("total-workouts");
-    if (totalWorkoutsElement) {
-      totalWorkoutsElement.textContent = mockData.totalWorkouts;
-    }
-    const activeStreakElement = document.getElementById("active-streak");
-    if (activeStreakElement) {
-      activeStreakElement.textContent = `${mockData.activeStreak} days`;
-    }
-    const lastWorkoutElement = document.getElementById("last-workout");
-    if (lastWorkoutElement) {
-      lastWorkoutElement.textContent = mockData.lastWorkout;
-    }
+    document.getElementById("total-workouts").textContent =
+      mockData.totalWorkouts;
+    document.getElementById(
+      "active-streak"
+    ).textContent = `${mockData.activeStreak} days`;
+    document.getElementById("last-workout").textContent = mockData.lastWorkout;
 
     // Update recent workouts list
-    const recentWorkoutsList = document.getElementById("recent-workouts");
-    if (recentWorkoutsList) {
-      recentWorkoutsList.innerHTML = "";
-      mockData.recentWorkouts.forEach((workout) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = workout;
-        recentWorkoutsList.appendChild(listItem);
-      });
+    const recentWorkoutsList = document.getElementById("recent-workouts-list");
+    if (mockData.recentWorkouts.length > 0) {
+      recentWorkoutsList.innerHTML = mockData.recentWorkouts
+        .map((workout) => `<li class="list-group-item">${workout}</li>`)
+        .join("");
     }
+
+    // Add event listeners to quick action buttons
+    document.querySelectorAll(".quick-actions button").forEach((button) => {
+      button.addEventListener("click", function () {
+        const targetSection = this.getAttribute("data-bs-target");
+        document.querySelectorAll(".content-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+        document.getElementById(targetSection).classList.add("active");
+      });
+    });
   }
 
   // Profile page functionality
@@ -177,9 +135,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Handle profile form submission
-    const profileForm = document.getElementById("profile-form");
-    if (profileForm) {
-      profileForm.addEventListener("submit", function (e) {
+    document
+      .getElementById("profile-form")
+      ?.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const profileData = {
@@ -197,19 +155,16 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("userProfile", JSON.stringify(profileData));
 
         // Update profile display
-        const profileNameElement = document.getElementById("profile-name");
-        if (profileNameElement) {
-          profileNameElement.textContent = profileData.fullName || "John Doe";
-        }
+        document.getElementById("profile-name").textContent =
+          profileData.fullName || "John Doe";
 
         alert("Profile updated successfully!");
       });
-    }
 
     // Handle measurements save
-    const saveMeasurementsButton = document.getElementById("save-measurements");
-    if (saveMeasurementsButton) {
-      saveMeasurementsButton.addEventListener("click", function () {
+    document
+      .getElementById("save-measurements")
+      ?.addEventListener("click", function () {
         const measurementsData = {
           chest: document.getElementById("chest").value,
           waist: document.getElementById("waist").value,
@@ -225,37 +180,48 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         alert("Measurements saved successfully!");
       });
-    }
 
     // Handle photo change button
-    const changePhotoButton = document.getElementById("change-photo-btn");
-    if (changePhotoButton) {
-      changePhotoButton.addEventListener("click", function () {
+    document
+      .getElementById("change-photo-btn")
+      ?.addEventListener("click", function () {
         alert("Photo upload functionality coming soon!");
       });
-    }
   }
 
   function startWorkout(event) {
     const template = event.currentTarget.dataset.template;
     const exercises = workoutTemplates[template];
     const workoutExercises = document.getElementById("workout-exercises");
-    if (!workoutExercises) return;
     workoutExercises.innerHTML = "";
 
     exercises.forEach((exercise) => {
       const exerciseItem = document.createElement("div");
       exerciseItem.className = "exercise-item";
-      exerciseItem.textContent = exercise;
+      if (template === "Cardio") {
+        exerciseItem.innerHTML = `
+                    <h4>${exercise}</h4>
+                    <div class="mb-2">
+                        <input type="number" class="form-control exercise-input" placeholder="Time (min)">
+                        <input type="number" class="form-control exercise-input" placeholder="Avg. Speed">
+                        <input type="number" class="form-control exercise-input" placeholder="Distance (km)">
+                    </div>
+                `;
+      } else {
+        exerciseItem.innerHTML = `
+                    <h4>${exercise}</h4>
+                    <div class="mb-2">
+                        <input type="number" class="form-control exercise-input" placeholder="Weight">
+                        <input type="number" class="form-control exercise-input" placeholder="Reps">
+                        <input type="number" class="form-control exercise-input" placeholder="Sets">
+                    </div>
+                `;
+      }
       workoutExercises.appendChild(exerciseItem);
     });
 
-    const workoutSection = document.getElementById("workout");
-    const activeWorkoutSection = document.getElementById("active-workout");
-    if (workoutSection && activeWorkoutSection) {
-      workoutSection.classList.remove("active");
-      activeWorkoutSection.classList.add("active");
-    }
+    document.getElementById("workout").classList.remove("active");
+    document.getElementById("active-workout").classList.add("active");
   }
 
   // Função para criar template
@@ -267,78 +233,34 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.show();
   }
 
+  // Função para adicionar um novo campo de exercício
   function addExerciseField() {
-    const exercisesList = document.getElementById('exercisesList');
-    if (!exercisesList) return; // Verificação de segurança
-
+    const exercisesList = document.getElementById("exercisesList");
     const exerciseCount = exercisesList.children.length + 1;
-    
-    const exerciseEntry = document.createElement('div');
-    exerciseEntry.className = 'exercise-entry mb-3 adding';
+
+    const exerciseEntry = document.createElement("div");
+    exerciseEntry.className = "exercise-entry mb-3 adding";
     exerciseEntry.innerHTML = `
-        <label class="form-label">Exercício ${exerciseCount}</label>
-        <div class="input-group">
-            <input type="text" class="form-control exercise-input" required>
-            <button type="button" class="btn btn-danger remove-exercise">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-    `;
-    
+            <label class="form-label">Exercício ${exerciseCount}</label>
+            <div class="input-group">
+                <input type="text" class="form-control exercise-input" required>
+                <button type="button" class="btn btn-danger remove-exercise">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+
     exercisesList.appendChild(exerciseEntry);
-    
+
+    // Remover a classe de animação após a animação terminar
     setTimeout(() => {
-        exerciseEntry.classList.remove('adding');
+      exerciseEntry.classList.remove("adding");
     }, 300);
-
-    console.log('Exercício adicionado'); // Para debug
   }
-
-  // Event listeners para o modal de criar template
-  const addExerciseBtn = document.getElementById('addExercise');
-  if (addExerciseBtn) {
-      addExerciseBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          addExerciseField();
-      });
-  }
-
-  // Event listener para remover exercício
-  document.getElementById('exercisesList')?.addEventListener('click', function(e) {
-      if (e.target.closest('.remove-exercise')) {
-          const exercises = document.querySelectorAll('.exercise-entry');
-          if (exercises.length > 1) {
-              removeExerciseField(e.target.closest('.remove-exercise'));
-          }
-      }
-  });
-
-  // Event listener para salvar template
-  document.getElementById('saveTemplate')?.addEventListener('click', saveNewTemplate);
-
-  // Event listener para resetar o modal quando for fechado
-  document.getElementById('createTemplateModal')?.addEventListener('hidden.bs.modal', function() {
-      const form = document.getElementById('templateForm');
-      form.reset();
-      
-      const exercisesList = document.getElementById('exercisesList');
-      exercisesList.innerHTML = `
-          <div class="exercise-entry mb-3">
-              <label class="form-label">Exercício 1</label>
-              <div class="input-group">
-                  <input type="text" class="form-control exercise-input" required>
-                  <button type="button" class="btn btn-danger remove-exercise" disabled>
-                      <i class="fas fa-trash"></i>
-                  </button>
-              </div>
-          </div>
-      `;
-  });
 
   // Função para remover um campo de exercício
   function removeExerciseField(button) {
     const exerciseEntry = button.closest(".exercise-entry");
-    if (!exerciseEntry) return;
     exerciseEntry.classList.add("removing");
 
     setTimeout(() => {
@@ -352,9 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const exercises = document.querySelectorAll(".exercise-entry");
     exercises.forEach((exercise, index) => {
       const label = exercise.querySelector(".form-label");
-      if (label) {
-        label.textContent = `Exercício ${index + 1}`;
-      }
+      label.textContent = `Exercício ${index + 1}`;
     });
   }
 
@@ -397,39 +317,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // ... (código existente) ...
 
     // Event listener para adicionar exercício
-    const addExerciseButton = document.getElementById("addExercise");
-    if (addExerciseButton) {
-      addExerciseButton.addEventListener("click", addExerciseField);
-    }
+    document
+      .getElementById("addExercise")
+      .addEventListener("click", addExerciseField);
 
     // Event listener para remover exercício
-    const exercisesList = document.getElementById("exercisesList");
-    if (exercisesList) {
-      exercisesList.addEventListener("click", function (e) {
+    document
+      .getElementById("exercisesList")
+      .addEventListener("click", function (e) {
         if (e.target.closest(".remove-exercise")) {
-          removeExerciseField(e.target.closest(".remove-exercise"));
+          const exercises = document.querySelectorAll(".exercise-entry");
+          if (exercises.length > 1) {
+            removeExerciseField(e.target.closest(".remove-exercise"));
+          }
         }
       });
-    }
 
     // Event listener para salvar template
-    const saveTemplateButton = document.getElementById("saveTemplate");
-    if (saveTemplateButton) {
-      saveTemplateButton.addEventListener("click", saveNewTemplate);
-    }
+    document
+      .getElementById("saveTemplate")
+      .addEventListener("click", saveNewTemplate);
 
     // Event listener para resetar o modal quando for fechado
-    const createTemplateModal = document.getElementById("createTemplateModal");
-    if (createTemplateModal) {
-      createTemplateModal.addEventListener("hidden.bs.modal", function () {
+    document
+      .getElementById("createTemplateModal")
+      .addEventListener("hidden.bs.modal", function () {
         const form = document.getElementById("templateForm");
-        if (form) {
-          form.reset();
-        }
+        form.reset();
 
         const exercisesList = document.getElementById("exercisesList");
-        if (exercisesList) {
-          exercisesList.innerHTML = `
+        exercisesList.innerHTML = `
                 <div class="exercise-entry mb-3">
                     <label class="form-label">Exercício 1</label>
                     <div class="input-group">
@@ -440,23 +357,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             `;
-        }
       });
-    }
   });
 
-  const finishWorkoutButton = document.getElementById("finish-workout");
-  if (finishWorkoutButton) {
-    finishWorkoutButton.addEventListener("click", () => {
-      alert("Workout completed! Data saved.");
-      const activeWorkoutSection = document.getElementById("active-workout");
-      const workoutSection = document.getElementById("workout");
-      if (activeWorkoutSection && workoutSection) {
-        activeWorkoutSection.classList.remove("active");
-        workoutSection.classList.add("active");
-      }
-    });
-  }
+  document.getElementById("finish-workout").addEventListener("click", () => {
+    alert("Workout completed! Data saved.");
+    document.getElementById("active-workout").classList.remove("active");
+    document.getElementById("workout").classList.add("active");
+  });
 
   function initStats() {
     // Stats functionality will be implemented later
@@ -501,30 +409,60 @@ document.addEventListener("DOMContentLoaded", function () {
   // Logo navigation
   function initLogoNavigation() {
     const logo = document.querySelector(".navbar-brand");
-    if (logo) {
-      logo.addEventListener("click", function (e) {
-        e.preventDefault();
+    logo.addEventListener("click", function (e) {
+      e.preventDefault();
 
-        // Remove active class from all sections and nav links
-        document.querySelectorAll(".content-section").forEach((section) => {
-          section.classList.remove("active");
-        });
-        document.querySelectorAll(".nav-link").forEach((link) => {
-          link.classList.remove("active");
-        });
-
-        // Activate home section and home nav link
-        const homeSection = document.getElementById("home");
-        const homeNavLink = document.querySelector('[data-bs-target="home"]');
-        if (homeSection && homeNavLink) {
-          homeSection.classList.add("active");
-          homeNavLink.classList.add("active");
-        }
-
-        // Scroll to top
-        window.scrollTo(0, 0);
+      // Remove active class from all sections and nav links
+      document.querySelectorAll(".content-section").forEach((section) => {
+        section.classList.remove("active");
       });
-    }
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      // Activate home section and home nav link
+      document.getElementById("home").classList.add("active");
+      document.querySelector('[data-bs-target="home"]').classList.add("active");
+
+      // Scroll to top
+      window.scrollTo(0, 0);
+    });
+  }
+
+  // Login form handler
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const loginButton = document.querySelector("#loginForm button[type='submit']");
+      if (loginButton) {
+        loginButton.disabled = true;
+        loginButton.textContent = "Entrando...";
+      }
+
+      try {
+        const response = await fetch("login.php", {
+          method: "POST",
+          body: new FormData(this),
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          showNotification(data.message);
+          setTimeout(() => location.reload(), 1500);
+        } else {
+          showNotification(data.error, true);
+        }
+      } catch (error) {
+        showNotification("Erro ao conectar com o servidor", true);
+      } finally {
+        if (loginButton) {
+          loginButton.disabled = false;
+          loginButton.textContent = "Login";
+        }
+      }
+    });
   }
 
   // Register form handler
@@ -542,6 +480,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (data.success) {
           showNotification(data.message);
+          $("#registerModal").modal("hide");
+          setTimeout(() => $("#loginModal").modal("show"), 1500);
         } else {
           showNotification(data.error, true);
         }
@@ -552,9 +492,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Update profile form submission
-  const profileForm = document.getElementById("profile-form");
-  if (profileForm) {
-    profileForm.addEventListener("submit", async function (e) {
+  document
+    .getElementById("profile-form")
+    ?.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const profileData = {
@@ -585,7 +525,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error:", error);
       }
     });
-  }
 
   // Função para mostrar notificações
   function showNotification(message, isError = false) {
@@ -629,19 +568,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const template = event.currentTarget.dataset.template;
     const exercises = workoutTemplates[template];
     const workoutExercises = document.getElementById("workout-exercises");
-    if (!workoutExercises) return;
     workoutExercises.innerHTML = "";
 
     exercises.forEach((exercise) => {
       addExerciseToWorkout(exercise);
     });
 
-    const workoutSection = document.getElementById("workout");
-    const activeWorkoutSection = document.getElementById("active-workout");
-    if (workoutSection && activeWorkoutSection) {
-      workoutSection.classList.remove("active");
-      activeWorkoutSection.classList.add("active");
-    }
+    document.getElementById("workout").classList.remove("active");
+    document.getElementById("active-workout").classList.add("active");
     showNotification("Treino iniciado com sucesso!");
   }
 
