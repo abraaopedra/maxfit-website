@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost';  // O servidor de banco de dados MySQL estará rodando localmente
-$dbname = 'fittrack_pro';  // Nome da base de dados que você criou
-$username = 'root';  // Usuário padrão do MySQL no XAMPP
-$password = '';  // No XAMPP, o usuário 'root' não tem senha por padrão
+$host = 'localhost';
+$dbname = 'fittrack_pro';
+$username = 'root';
+$password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
