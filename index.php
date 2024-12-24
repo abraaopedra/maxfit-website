@@ -1,6 +1,11 @@
 <?php
 session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
+if (!$isLoggedIn && basename($_SERVER['PHP_SELF']) !== 'index.php') {
+    header("Location: index.php");
+    exit();
+}
+$username = $isLoggedIn ? $_SESSION['username'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,6 +79,9 @@ $isLoggedIn = isset($_SESSION['user_id']);
               </button>
             </li>
             <?php if ($isLoggedIn): ?>
+              <li class="nav-item">
+                <span class="navbar-text me-3">Welcome, <?php echo htmlspecialchars($username); ?></span>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="logout.php">
                   <i class="fas fa-sign-out-alt me-1"></i>Logout

@@ -450,7 +450,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (data.success) {
           showNotification(data.message);
-          setTimeout(() => location.reload(), 1500);
+          setTimeout(() => window.location.href = data.redirect, 1500);
         } else {
           showNotification(data.error, true);
         }
@@ -462,6 +462,21 @@ document.addEventListener("DOMContentLoaded", function () {
           loginButton.textContent = "Login";
         }
       }
+    });
+  }
+
+  // Logout link handler
+  const logoutLink = document.querySelector("a[href='logout.php']");
+  if (logoutLink) {
+    logoutLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      fetch("logout.php")
+        .then(() => {
+          window.location.href = "index.php";
+        })
+        .catch((error) => {
+          showNotification("Erro ao fazer logout", true);
+        });
     });
   }
 
